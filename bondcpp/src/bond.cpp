@@ -176,7 +176,7 @@ void Bond::start()
   boost::mutex::scoped_lock lock(mutex_);
   connect_timer_.reset();
   pub_ = nh_.advertise<bond::Status>(topic_, 5);
-  sub_ = nh_.subscribe<bond::Status>(topic_, 30, boost::bind(&Bond::bondStatusCB, this, _1));
+  sub_ = nh_.subscribe<bond::Status>(topic_, 30, boost::bind(&Bond::bondStatusCB, this, boost::placeholders::_1));
 
   publishingTimer_ = nh_.createSteadyTimer(
     ros::WallDuration(heartbeat_period_), &Bond::doPublishing, this);
